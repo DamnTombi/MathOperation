@@ -1,7 +1,7 @@
 package app;
 
-import java.net.SocketOption;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Main {
     @FunctionalInterface
@@ -27,6 +27,15 @@ public class Main {
         }
     }
 
+    public static class RandomNumberGenerator {
+        static int generateRandomNumber() {
+            int min = 1;
+            int max = 100;
+            int randomNumber = (int) (Math.random() * (max - min + 1)) + min;
+            return randomNumber;
+        }
+    }
+
 
 
 
@@ -40,11 +49,19 @@ public class Main {
         };
         int result = mathOperation.operate(1, 2);
 
+        System.out.println("Sum result "+result);
+
 
         StringManipulator toUppercase = s->s.toUpperCase();
         System.out.println(toUppercase.input("hello world, it must be uppercase"));
 
-        
+        Function<String,Integer> function = StringListProcessor::countUppercase;
+        int uppercaseCount = function.apply("Hello There. Obi Van Kenobi");
+        System.out.println("Uppercase laters "+uppercaseCount);
+
+        Supplier<Integer> randomizer = RandomNumberGenerator::generateRandomNumber;
+        int randomNumber = randomizer.get();
+        System.out.println("Random Number "+randomNumber);
     }
 }
 
